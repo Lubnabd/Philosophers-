@@ -6,7 +6,7 @@ Create threads for each philosopher.*/
 
 t_philo *init_philo(t_data *data)
 {
-    t_philo *philos = malloc (sizeof(t_philo) * data->num_philos);
+    t_philo *philos = malloc (sizeof(t_philo) * data->number_of_philosophers);
     if (!philos)
         return (NULL);
         int i = 0;
