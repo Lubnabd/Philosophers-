@@ -1,7 +1,3 @@
-/* Handles initialization of data
-Parse command-line arguments (e.g., number of philosophers, time limits).
-Initialize mutexes for forks.
-Create threads for each philosopher.*/
 #include "philo.h"
 
 t_philo *init_philo(t_data *data)
