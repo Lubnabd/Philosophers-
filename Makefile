@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = main.c simulation.c init.c utils.c
+SRCS = main.c simulation.c init.c utils.c routine.c
 
 OBJS = $(SRCS:.c=.o)
 

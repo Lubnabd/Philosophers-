@@ -1,3 +1,4 @@
+////why would i use -lpthread in makefile? and do i have to mention it i the name rule? 
 #include "philo.h"
 
 int	parse_args(t_data *data, int argc, char **argv) //extracts user input and stores it in the t_data struct
@@ -18,13 +19,6 @@ int	parse_args(t_data *data, int argc, char **argv) //extracts user input and st
 			return 1;
 		}
     return (0);
-}
-
-void *routine(void *arg)
-{
-    (void)arg;
-    printf("Philosopher started!\n");
-    return NULL;
 }
 
 t_philo *init_philos(t_data *data)

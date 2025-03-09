@@ -20,11 +20,18 @@ typedef struct s_philo
 {
 	int			id;
 	pthread_t	thread;
-	t_data		*data;
+	t_data		*data; 
 	//pthread_mutex_t	left_fork;
 } t_philo;
+////bool     full?? 
+//// long meals_counter
+//// long last meal time // time passed from the last meal 
+// t_fork *left_fork
+// t_fork *right_fork
+
+// we can do a struct for the forks and one for the philos // and a typedef struct for the table 
 
 //int parse_args(t_data *data, int argc, char **argv);
 //t_philo *init_philo(t_data *data); // Declare function here
-
+void *routine(void *arg);
 #endif
