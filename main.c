@@ -37,6 +37,7 @@ t_philo *init_philos(t_data *data)
         return NULL;
     }
 
+	// Initialize forks (mutexes)
 	i = 0;
 	while (i < data->number_of_philosophers)
 	{
@@ -45,6 +46,14 @@ t_philo *init_philos(t_data *data)
         pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
+	// Initialize philosophers and assign forks
+    for (i = 0; i < data->number_of_philosophers; i++)
+    {
+        philos[i].id = i + 1;
+        philos[i].data = data;
+        data[i].forks = &data->forks[i];                   // Left fork
+        data[i].forks = &data->forks[(i + 1) % data->number_of_philosophers]; // Right fork (circular assignment) //The modulus (%) ensures the last philosopher (index N-1) gets the first fork (index 0), forming a circular dining table.
+    }
 	return philos;
 
 }
@@ -73,21 +82,26 @@ int	main(int argc, char **argv)
 for (i = 0; i < data.number_of_philosophers; i++)
 {
     if (pthread_create(&philos[i].thread, NULL, routine, &philos[i]) != 0)
-    {
+    { //If a thread fails to create, you should destroy mutexes and free memory before exiting.
         printf("Error: Failed to create thread for philosopher %d\n", i + 1);
-        return 1;
-    }
-}
-
-for (i = 0; i < data.number_of_philosophers; i++)
-    {
-        pthread_join(philos[i].thread, NULL);
-    }
-
-	printf("number_of_philosophers: %d, time_to_die: %d, time_to_eat: %d, time_to_sleep: %d, number_of_times_each_philosopher_must_eat: %d\n",
-		data.number_of_philosophers, data.time_to_die, data.time_to_eat, data.time_to_sleep, data.number_of_times_each_philosopher_must_eat);
+// Free allocated resources before exiting
+while (--i >= 0)
+pthread_join(philos[i].thread, NULL);
 
 		free(philos);
     free(data.forks);
+	return 1;
+	}
 }
+ // Wait for all threads to finish
+ for (i = 0; i < data.number_of_philosophers; i++)
+ pthread_join(philos[i].thread, NULL);
 
+// Destroy mutexes
+for (i = 0; i < data.number_of_philosophers; i++)
+ pthread_mutex_destroy(&data.forks[i]);
+
+free(philos);
+free(data.forks);
+}
+/*./philo 100 800 200 200*/

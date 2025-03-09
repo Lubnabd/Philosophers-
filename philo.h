@@ -18,16 +18,10 @@ typedef struct s_data //to make it easier to declare variables of that type.
 
 typedef struct s_philo
 {
-	int			id;
-	pthread_t	thread;
-	t_data		*data; 
-	//pthread_mutex_t	left_fork;
+    int             id;             // Philosopher ID
+    pthread_t       thread;         // Thread representing the philosopher
+    t_data          *data;          // Shared simulation data
 } t_philo;
-////bool     full?? 
-//// long meals_counter
-//// long last meal time // time passed from the last meal 
-// t_fork *left_fork
-// t_fork *right_fork
 
 // we can do a struct for the forks and one for the philos // and a typedef struct for the table 
 
