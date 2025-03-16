@@ -2,23 +2,49 @@
 
 int			ft_atoi(const char *str)
 {
-	long int	n;
 	int			sign;
+	long		res;
 
-	n = 0;
 	sign = 1;
-	while ((*str <= 13 && *str >= 9) || *str == 32)
+	res = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
 		str++;
-	if (*str == '-')
-		return (-1);
-	else if (*str == '+')
-		str++;
-	while (*str)
+	if (*str == '-' || *str == '+')
 	{
-		if (*str >= '0' && *str <= '9')
-			n = n * 10 + (*str++ - '0');
-		else
-			return (-1);
+		if (*str == '-')
+			sign = -1;
+		str++;
 	}
-	return ((int)(n * sign));
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
+	return (res * sign);
+}
+
+void *safe_malloc(size_t bytes)
+{
+    void *ptr;
+
+    ptr = malloc(bytes);
+    if (!ptr)
+	{
+		//error_manage("error in the malloc\n");
+		return (NULL);
+	}
+    return (ptr);
+}
+
+size_t		get_current_time()
+{
+	/*struct timeval
+	{
+		time_t		tv_sec; //seconds since jan 1 1970
+		suseconds_t tv_usec; //10000000 micro = 1 sec
+	}*/
+
+	struct timeval current;
+	gettimeofday(&current, NULL); // NULL because we don’t need timezone info
+	return (current.tv_sec * 1000LL + current.tv_usec / 1000);
 }
