@@ -17,5 +17,6 @@ int	parse_args(t_data *data, int argc, char **argv)
 		printf("invalid args\n");
 		return (1);
 	}
+	data->dead_flag = 0;
 	return (0);
 }

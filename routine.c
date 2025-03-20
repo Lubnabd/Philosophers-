@@ -48,31 +48,19 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-void	create_threads(t_data	*data)
+int	join_threads(t_data *data)
 {
 	int		i;
 
-	for (i = 0; i < data->philo_nbr; i++)
-	{
-		if (pthread_create(&data->philo[i].thread, NULL, routine,
-				&data->philo[i]) != 0)
-		{
-			printf("Failed to create thread for philosopher %d\n", i + 1);
-			exit(1);
-		}
-	}
-}
-
-void	join_threads(t_data *data)
-{
-	int		i;
-
-	for (i = 0; i < data->philo_nbr; i++)
+	i = 0;
+	while (i < data->philo_nbr)
 	{
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
 		{
 			printf("Failed to join thread for philosopher %d\n", i + 1);
-			exit(1);
+			return (1);
 		}
+		i++;
 	}
+	return (0);
 }
