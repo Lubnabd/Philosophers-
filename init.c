@@ -2,7 +2,8 @@
 
 void	fork_init(t_data *data)
 {
-	int i;
+	int	i;
+
 	data->forks = safe_malloc(sizeof(t_fork) * data->philo_nbr);
 	if (!data->forks)
 	{
@@ -21,27 +22,28 @@ void	fork_init(t_data *data)
 t_philo	*philo_init(t_data *data) //t_philo instead of void 
 {
 	t_philo	*philo;
-	int i = 0;
+	int		i;
 
-	philo = safe_malloc(sizeof(t_philo) * data->philo_nbr);
+	i = 0;
+	philo = safe_malloc (sizeof(t_philo) * data->philo_nbr);
 	if (!philo)
 		return (NULL);
-	while ( i < data->philo_nbr)
+	while (i < data->philo_nbr)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].meals_eaten = 0;
-		data->philo[i].last_meal_time = get_current_time(); //or 0??
+		data->philo[i].last_meal_time = get_current_time();
 		data->philo[i].data = data;
 		data->philo[i].full = false;
-
 		data->philo[i].first_fork = &data->forks[i].fork;
-		data->philo[i].second_fork = &data->forks[(i + 1) % data->philo_nbr].fork;
+		data->philo[i].second_fork = &data->forks[(i + 1)
+			% data->philo_nbr].fork;
 		i++;
 	}
 	return (philo);
 }
 
-void	init_program(t_data * data)
+void	init_program(t_data *data)
 {
 	data->dead_flag = false;
 	fork_init(data);
