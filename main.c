@@ -37,6 +37,7 @@ int	main(int argc, char **argv)
     // Join threads after they finish
     join_threads(&data);
 
+	pthread_create(&data.monitor_thread, NULL, monitor, data.philo);
     // Cleanup resources
     free(data.philo);
     free(data.forks);

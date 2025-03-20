@@ -48,3 +48,9 @@ size_t		get_current_time()
 	gettimeofday(&current, NULL); // NULL because we don’t need timezone info
 	return (current.tv_sec * 1000LL + current.tv_usec / 1000);
 }
+void print_status(char *status, t_philo *philo)
+{
+    pthread_mutex_lock(&philo->data->print_lock);
+    printf("%ld %d %s\n", get_current_time(), philo->id, status);
+    pthread_mutex_unlock(&philo->data->print_lock);
+}
