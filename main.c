@@ -2,7 +2,6 @@
 
 int	main(int argc, char **argv)
 {
-	//(void)argv;
 	t_data	data;
 
 	if (argc < 5 || argc > 6)

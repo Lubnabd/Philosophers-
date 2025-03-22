@@ -14,7 +14,7 @@ int	fork_init(t_data *data)
 	while (i < data->philo_nbr)
 	{
 		if (pthread_mutex_init(&data->fork[i], NULL) != 0)
-			retrun (1); //fail
+			retrun (1);
 		i++;
 	}
 	if (pthread_mutex_init(&data->action_lock, NULL) != 0
