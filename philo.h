@@ -42,16 +42,17 @@ typedef struct s_philo
 
 int		parse_args(t_data *data, int argc, char **argv);
 int		ft_atoi(const char *str);
-void	fork_init(t_data *data);
-t_philo	*philo_init(t_data *data);
-void	init_program(t_data *data);
+int		fork_init(t_data *data);
+int		philo_init(t_data *data);
+int		init_program(t_data *data);
 void	*routine(void *arg);
 void	*safe_malloc(size_t bytes);
 int		error_manage(int error);
 void	create_threads(t_data *data);
-void	join_threads(t_data *data);
+int		join_threads(t_data *data);
 size_t	get_current_time(void);
 void	*monitor(void *args);
 void	print_status(char *status, t_philo *philo);
+void	destroy_data(t_data *data);
 
 #endif

@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/lubnaabdelkhlaleq/Desktop/philosophers",
+      "program": "/Users/lubnaabdelkhlaleq/Desktop/philosophers/build/Debug/outDebug"
+    }
+  ]
+}

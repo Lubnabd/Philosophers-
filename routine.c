@@ -3,48 +3,58 @@
 
 void	think(t_philo *philo)
 {
-	printf("philosopher %d is thinking", philo->id);
+	print_status("philosopher %d is thinking", philo);
 	usleep(1000);
 }
 
 void	eat(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(&philo->data->forks[philo->id].fork);
-		pthread_mutex_lock(&philo->data->forks[(philo->id + 1)
-			% philo->data->philo_nbr].fork);
-	}
-	else
-	{
-		pthread_mutex_lock(&philo->data->forks[(philo->id + 1)
-			% philo->data->philo_nbr].fork);
-		pthread_mutex_lock(&philo->data->forks[philo->id].fork);
-	}
-	printf("Philosopher %d is eating...\n", philo->id);
-	usleep(philo->data->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->data->forks[philo->id].fork);
-	pthread_mutex_unlock(&philo->data->forks[(philo->id + 1)
-		% philo->data->philo_nbr].fork);
+	if (philo->data->dead_flag)
+		return ;
+
+		pthread_mutex_lock(philo->first_fork);
+		pthread_mutex_lock(philo->second_fork);
+
+		print_status("is eating\n", philo);
+		philo->last_meal_time = get_current_time();
+		usleep(philo->data->time_to_eat * 1000);
+		philo->meals_eaten++;
+
+		pthread_mutex_unlock(philo->first_fork);
+		pthread_mutex_unlock(philo->second_fork);
+
 }
 
 void	sleep_philo(t_philo *philo)
 {
-	printf("Philosopher %d is sleeping...\n", philo->id);
+	print_status("Philosopher %d is sleeping...\n", philo);
 	usleep(philo->data->time_to_sleep * 1000);
 }
 
 void	*routine(void *arg)
 {
-	t_philo	*philo;
+	(void)arg;
+	/*t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		usleep (1000);
 	while (1)
 	{
+		pthread_mutex_lock(&philo->data->action_lock);
+        if (philo->data->dead_flag)
+        {
+            pthread_mutex_unlock(&philo->data->action_lock);
+            break;
+        }
+        pthread_mutex_unlock(&philo->data->action_lock);
+		
 		think(philo);
 		eat(philo);
 		sleep_philo(philo);
-	}
+	}*/
+usleep(1000);
+printf("working\n");
 	return (NULL);
 }
 
@@ -57,7 +67,9 @@ int	join_threads(t_data *data)
 	{
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
 		{
+			pthread_mutex_lock(&data->print_lock);
 			printf("Failed to join thread for philosopher %d\n", i + 1);
+			pthread_mutex_unlock(&data->print_lock);
 			return (1);
 		}
 		i++;
