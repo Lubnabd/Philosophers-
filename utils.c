@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int			sign;
 	long		res;
@@ -23,34 +23,27 @@ int			ft_atoi(const char *str)
 	return (res * sign);
 }
 
-void *safe_malloc(size_t bytes)
+void	*safe_malloc(size_t bytes)
 {
-    void *ptr;
+	void	*ptr;
 
-    ptr = malloc(bytes);
-    if (!ptr)
-	{
-		//error_manage("error in the malloc\n");
+	ptr = malloc(bytes);
+	if (!ptr)
 		return (NULL);
-	}
-    return (ptr);
+	return (ptr);
 }
 
-size_t		get_current_time()
+size_t	get_current_time(void)
 {
-	/*struct timeval
-	{
-		time_t		tv_sec; //seconds since jan 1 1970
-		suseconds_t tv_usec; //10000000 micro = 1 sec
-	}*/
+	struct timeval	current;
 
-	struct timeval current;
-	gettimeofday(&current, NULL); // NULL because we don’t need timezone info
+	gettimeofday(&current, NULL);
 	return (current.tv_sec * 1000LL + current.tv_usec / 1000);
 }
-void print_status(char *status, t_philo *philo)
+
+void	print_status(char *status, t_philo *philo)
 {
-    pthread_mutex_lock(&philo->data->print_lock);
-    printf("%ld %d %s\n", get_current_time(), philo->id, status);
-    pthread_mutex_unlock(&philo->data->print_lock);
+	pthread_mutex_lock(&philo->data->print_lock);
+	printf("%ld %d %s\n", get_current_time(), philo->id, status);
+	pthread_mutex_unlock(&philo->data->print_lock);
 }
